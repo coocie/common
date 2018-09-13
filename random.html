@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+//生成随机输入数据
+<html>
+<head>
+	<title>排序</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />  
+	<script type="text/javascript" src="https://cdn.bootcss.com/vue/2.2.2/vue.min.js"></script>
+</head>
+<body>
+	<div id="app">
+		<div><input  v-model="add" placeholder=""><button v-on:click="addone">添加</button><button v-on:click="sortList">排序</button></div>
+		<div>
+		  <ol>
+		    <li v-for="(listone,index) in sbool">
+		      {{ listone.name }}&nbsp;&nbsp;<button v-on:click="del(index)">删除</button>
+		    </li>
+		  </ol>
+		</div>
+	</div>
+
+</body>
+<script>
+	var id = 0;
+	new Vue({
+	  el: '#app',
+	  data: {
+	  	add:'',
+	    message: 'Hello Vue.js!',
+	    sbool:[],
+	  },
+	  methods:{
+	  	addone:function(){
+	  		vm = this;
+	  		vm.sbool.push({name:vm.add,id:id++});
+	  	},
+	  	del:function(index){
+	  		vm = this;
+	  		vm.sbool.splice(index,1);
+	  	},
+	  	sortList:function(){
+	  		vm = this;
+	  		random = [];
+	  		length = vm.sbool.length;
+	  		cc = vm.sbool;
+	  		for (let i = length - 1; i > -1; i--) {
+	  			let index = Math.floor(Math.random()*(i+1));
+	  			random.push(cc[index]);
+	  			cc.splice(index,1);
+	  		}
+	  		vm.sbool = random;
+	  	}
+	  }
+	})
+</script>
+</html>
