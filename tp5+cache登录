@@ -1,0 +1,72 @@
+<?php 
+namespace addons\proxy\controller;
+use think\Controller;
+use think\Cache;
+
+/**
+ * 代理登录
+ */
+class Login extends Controller{
+/*
+ * 代理登录
+*/
+	public function Login(){
+		$data = checkInput(['account','pwd']);
+		$res  = model('proxy')->where([
+				'account'	=>	$data['account'],
+				'pwd'		=>	md5($data['pwd']),
+				'status'	=>	1
+			])->find();
+		if($res){
+			$token = md5(time().$res['store_id'].$res['id'].rand());
+			Cache::set($token.'store_id',$res['store_id']);
+			Cache::set($token.'pid',$res['id']);
+			back(1,'登录成功！',['token'=>$token]);
+		}else{
+			back(0,'账号或密码错误！');
+		}
+	}
+/*
+ * 代理注销登录
+*/
+	public function Logout(){    	
+		$input = input();
+    	if(!isset($input['token'])){
+    		back(0,'请传入token参数');
+    	}else{
+    		$token = $input['token'];
+			Cache::rm($token.'store_id');
+			Cache::rm($token.'pid');
+			back(1,'注销成功！');
+		}
+	}
+}
+
+<?php 
+namespace addons\proxy\controller;
+use think\Controller;
+use think\Cache;
+
+/**
+ * 代理继承类
+ */
+class Proxy extends Controller{
+	public $store_id = 0;
+    public function _initialize(){
+    	$input = input();
+    	if(!isset($input['token'])){
+    		back(0,'请传入token参数');
+    	}else{
+    		$token = $input['token'];
+    		if(!Cache::get($token.'store_id')){
+    			back(100,'请重新登陆');
+    		}
+    	}
+    	$this->store_id = Cache::get($token.'store_id');
+    	$this->pid = Cache::get($token.'pid');
+    	//重新赋值避免过期
+		Cache::set($token.'store_id',$this->store_id);
+		Cache::set($token.'pid',$this->pid);
+		parent::_initialize();
+    }
+}
