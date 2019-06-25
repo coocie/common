@@ -1,1 +1,126 @@
+php
 
+
+//上传静止图片（只生成一次，以后直接替换）
+
+/**
+ * 上传文件
+*/
+function uploadsStaticImage(){
+    $file = request()->file('f');
+    $path = input('path') ? input('path') : '';
+    $response = array();
+    if (!$path) {
+        $response['isSuccess'] = false;
+    }else{
+        if(is_array($file)){
+            foreach ($file as $key => $value) {
+                $info = $value->move('./uploads/mer');
+                $a=$info->getSaveName();
+                $imgp= str_replace("\\","/",$a);
+                $imgpath='uploads/mer/'.$imgp;
+                $banner_img= $imgpath;
+                if($info){
+                    $response['isSuccess'] = true;
+                    $response['f'][] = $imgpath;
+                }else{
+                    $response['isSuccess'] = false;
+                }
+            }
+        }else{
+            $info = $file->move('./uploads/static',$path);
+            $a=$info->getSaveName();
+            $imgp= str_replace("\\","/",$a);
+            $imgpath='uploads/static/'.$imgp;
+            $banner_img= $imgpath;
+            if($info){
+                $response['isSuccess'] = true;
+                $response['f'] = $imgpath;
+            }else{
+                $response['isSuccess'] = false;
+            }
+        }
+    }
+    echo json_encode($response);
+}
+
+
+
+
+
+
+
+
+
+
+html
+
+ <form style="float: left;" id="form2">
+      <input type="button" style="cursor: pointer;" value="上传图片" onclick="f2.click()" class="btn_mouseout up-img"/><br>
+       <p><input type="file" id="f2" name="f" onchange="sc(this,2);" style="display:none"/></p>
+ </form>
+
+script
+
+
+//图片上传
+function sc(that,type){
+    var image;
+    if(type == 1){
+      image = $('#f1');
+    }else{
+      image = $('#f2');
+    }
+    console.log(image);
+    var animateimg = image.val(); //获取上传的图片名 带//
+    var imgarr=animateimg.split('\\'); //分割
+    var myimg=imgarr[imgarr.length-1]; //去掉 // 获取图片名
+    var houzui = myimg.lastIndexOf('.'); //获取 . 出现的位置
+    var ext = myimg.substring(houzui, myimg.length).toUpperCase();  //切割 . 获取文件后缀
+
+    var file = image.get(0).files[0]; //获取上传的文件
+    var fileSize = file.size;           //获取上传的文件大小
+    var maxSize = 1048576;              //最大1MB
+    if(ext !='.PNG' && ext !='.GIF' && ext !='.JPG' && ext !='.JPEG' && ext !='.BMP'){
+        layer.msg('文件类型错误,请上传图片类型');
+        return false;
+    }else if(parseInt(fileSize) >= parseInt(maxSize)){
+        layer.msg('上传的文件不能超过1MB');
+        return false;
+    }else{
+        var data;
+        if(type == 1){
+           data = new FormData($('#form1')[0]);
+           data.append("path","user_share_bg");
+        }else{
+           data = new FormData($('#form2')[0]);
+           data.append("path","mer_share_bg");
+        }
+        $.ajax({
+            url: "/admin/uploadsStaticImage",
+            type: 'POST',
+            data: data,
+            dataType: 'JSON',
+            cache: false,
+            processData: false,
+            contentType: false
+        }).done(function(ret){
+            if(ret['isSuccess']){
+                let result = '';
+                if(type == 1){
+                    result += '<img src="/' + ret['f']  + '?v='+Math.random()+'" width="100" style="margin-right:20px;">';
+                    $('#result1').html(result);
+                    share_image = ret['f'];
+                }else{
+                    result += '<img src="/' + ret['f']  + '?v='+Math.random()+'" width="100" style="margin-right:20px;">';
+                    $('#result2').html(result);
+                    poster_image = ret['f'];
+                }
+                layer.msg('上传成功');
+            }else{
+                layer.msg('上传失败');
+            }
+        });
+        return false;
+     }
+  }
