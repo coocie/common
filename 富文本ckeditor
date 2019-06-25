@@ -1,0 +1,20 @@
+https://ckeditor.com/
+
+
+
+<form>
+<textarea name="editor1" id="editor1" rows="10" cols="80">{$data.des}</textarea>
+<script>
+    var editor = CKEDITOR.replace( 'editor1', {
+      filebrowserImageUploadUrl :"/admin/ckupload?img_des_ca={$img_des_ca}",
+      removePlugins:'elementspath,resize,smiley',
+      codeSnippet_theme: 'zenburn',
+      height:'600',
+    } );
+</script>
+</form>
+
+
+
+
+let des = editor.getData();
