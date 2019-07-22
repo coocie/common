@@ -1,5 +1,5 @@
 https://ckeditor.com/
-
+<script src="/ckeditor/ckeditor.js"></script>
 
 
 <form>
@@ -18,3 +18,23 @@ https://ckeditor.com/
 
 
 let des = editor.getData();
+
+
+
+php
+
+/*
+ * ckeditor 上传图片
+*/
+public function ckupload(){
+    $file = request()->file('upload');
+    $info = $file->move( './uploads');
+    if($info){
+        $src = config('http_s').$_SERVER['SERVER_NAME'].'/uploads/'.$info->getSaveName();
+        return json(['uploaded' => 1,'url' => $src]);
+    }else{
+        // 上传失败获取错误信息
+        $src = '';
+        return json(['uploaded' => 0,'error' => ['message' => '上传失败']]);
+    }
+}
