@@ -1,0 +1,2 @@
+1 》 composer 代理链接
+composer config repo.packagist composer https://packagist.phpcomposer.com
