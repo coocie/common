@@ -117,3 +117,29 @@ function check_bankCard($card_number){
         return false;
     }
 }
+/**
+ * md5简单加密
+ */
+function md5_encode($code)
+{
+    $code = \str_replace('e', '*', $code);
+    $code = \str_replace('d', 'e', $code);
+    $code = \str_replace('4', 'd', $code);
+    $code = \str_replace('1', '4', $code);
+    $code = \str_replace('a', '1', $code);
+    $code = \str_replace('*', 'a', $code);
+    return $code;
+}
+/**
+ * md5简单解密
+ */
+function md5_decode($code)
+{
+    $code = \str_replace('a', '*', $code);
+    $code = \str_replace('1', 'a', $code);
+    $code = \str_replace('4', '1', $code);
+    $code = \str_replace('d', '4', $code);
+    $code = \str_replace('e', 'd', $code);
+    $code = \str_replace('*', 'e', $code);
+    return $code;
+}
