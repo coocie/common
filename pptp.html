@@ -1,0 +1,123 @@
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="referrer" content="origin" />
+        <meta http-equiv="Cache-Control" content="no-transform" />
+        <meta http-equiv="Cache-Control" content="no-siteapp" />
+        <title>CentOS7安装PPTP</title>
+    </head>
+    <body>
+        <div id="cnblogs_post_body" class="blogpost-body ">
+            <p>CentOS7安装PPTP VPN（开启firewall防火墙）</p>
+        <p>1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 准备一个CentOS7服务器</p>
+        <p>2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 检查是否支持PPTP</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">modprobe</span> ppp-compress-<span style="color: #800080;">18</span> &amp;&amp; <span style="color: #0000ff;">echo</span><span style="color: #000000;"> ok #返回OK
+        </span><span style="color: #0000ff;">zgrep</span> MPPE /proc/config.gz #返回CONFIG_PPP_MPPE=y 或 =<span style="color: #000000;">m
+        </span><span style="color: #0000ff;">cat</span> /dev/net/tun #返回cat: /dev/net/tun: File descriptor <span style="color: #0000ff;">in</span> bad state</pre>
+        </div>
+        <p style="margin-left: 30px;">&nbsp;</p>
+        <p style="margin-left: 30px;">以上三条命令满足一条即为支持PPTP</p>
+        <p>3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 安装PPP</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">yum</span> <span style="color: #0000ff;">install</span> -y ppp</pre>
+        </div>
+        <p>4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 安装PPTPD</p>
+        <p style="margin-left: 30px;">4.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 添加EPEL源：</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">wget</span> http:<span style="color: #008000;">//</span><span style="color: #008000;">dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm</span></pre>
+        </div>
+        <p style="margin-left: 30px;">4.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 安装EPEL源：</p>
+        <div class="cnblogs_code">
+        <pre>rpm -ivh epel-release-latest-<span style="color: #800080;">7</span>.noarch.rpm</pre>
+        </div>
+        <p style="margin-left: 30px;">4.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 检查是否已添加到源列表中：</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">yum</span> repolist</pre>
+        </div>
+        <p style="margin-left: 30px;">4.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 更新源列表：</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">yum</span> -y update</pre>
+        </div>
+        <p style="margin-left: 30px;">4.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 安装PPTPD：</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">yum</span> <span style="color: #0000ff;">install</span> -y pptpd</pre>
+        </div>
+        <p>5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编辑/etc/pptpd.conf设置VPN内网IP段</p>
+        <p style="margin-left: 30px;">最后IP设置改为：</p>
+        <div class="cnblogs_code">
+        <pre>localip <span style="color: #800080;">192.168</span>.<span style="color: #800080;">0.1</span><span style="color: #000000;">
+        remoteip </span><span style="color: #800080;">192.168</span>.<span style="color: #800080;">0.214</span>,<span style="color: #800080;">192.168</span>.<span style="color: #800080;">0.245</span></pre>
+        </div>
+        <p style="margin-left: 30px;">&nbsp;</p>
+        <p>6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编辑/etc/ppp/options.pptpd</p>
+        <p style="margin-left: 30px;">6.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 更改DNS项：</p>
+        <p style="margin-left: 60px;">ms-dns 8.8.8.8</p>
+        <p style="margin-left: 30px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ms-dns 8.8.4.4</p>
+        <p style="margin-left: 30px;">6.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 修改日志记录：</p>
+        <p style="margin-left: 60px;">nologfd</p>
+        <p style="margin-left: 60px;">logfile /var/log/pptpd.log</p>
+        <p>7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编辑/etc/ppp/chap-secrets设置VPN账号密码</p>
+        <p style="margin-left: 30px;">用户名 pptpd 密码 *//每个字段之间用tab键隔开&nbsp; *表示用任意IP连接VPN都可以</p>
+        <p style="margin-left: 30px;">样例：登录账号为root 密码为123&nbsp; 这样写：</p>
+        <p style="margin-left: 60px;">root&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; pptpd&nbsp;&nbsp;&nbsp;&nbsp; 123&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; *</p>
+        <p>8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 编辑/etc/sysctl.conf修改内核参数支持内核转发</p>
+        <p style="margin-left: 30px;">net.ipv4.ip_forward=1</p>
+        <p style="margin-left: 30px;">输入命令生效：sysctl -p</p>
+        <p>9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 修改防火墙设置：</p>
+        <p style="margin-left: 30px;">9.1&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 创建规则文件：touch /usr/lib/firewalld/services/pptpd.xml</p>
+        <p style="margin-left: 30px;">9.2&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 修改规则文件</p>
+        <div class="cnblogs_code">
+        <pre><span style="color: #0000ff;">&lt;?</span><span style="color: #ff00ff;">xml version="1.0" encoding="utf-8"</span><span style="color: #0000ff;">?&gt;</span>
+        
+        <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">service</span><span style="color: #0000ff;">&gt;</span>
+        
+               <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">short</span><span style="color: #0000ff;">&gt;</span>pptpd<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">short</span><span style="color: #0000ff;">&gt;</span>
+        
+               <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">description</span><span style="color: #0000ff;">&gt;</span>PPTP<span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">description</span><span style="color: #0000ff;">&gt;</span>
+        
+               <span style="color: #0000ff;">&lt;</span><span style="color: #800000;">port </span><span style="color: #ff0000;">protocol</span><span style="color: #0000ff;">="tcp"</span><span style="color: #ff0000;"> port</span><span style="color: #0000ff;">="1723"</span><span style="color: #0000ff;">/&gt;</span>
+        
+        <span style="color: #0000ff;">&lt;/</span><span style="color: #800000;">service</span><span style="color: #0000ff;">&gt;</span></pre>
+        </div>
+        <p style="margin-left: 30px;">9.3&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 启动或重启防火墙：</p>
+        <div class="cnblogs_code">
+        <pre>systemctl start firewalld.service或firewall-cmd --reload</pre>
+        </div>
+        <p style="margin-left: 30px;">9.4&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 添加服务：</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --permanent --zone=public --add-service=pptpd</pre>
+        </div>
+        <p style="margin-left: 30px;">9.5&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 允许防火墙伪装IP：</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --add-masquerade</pre>
+        </div>
+        <p style="margin-left: 30px;">9.6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 开启47及1723端口：</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --permanent --zone=public --add-port=<span style="color: #800080;">47</span>/<span style="color: #000000;">tcp
+        firewall</span>-cmd --permanent --zone=public --add-port=<span style="color: #800080;">1723</span>/tcp</pre>
+        </div>
+        <p style="margin-left: 30px;">9.7&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 允许gre协议：</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --permanent --direct --add-rule ipv4 filter INPUT <span style="color: #800080;">0</span> -p gre -<span style="color: #000000;">j ACCEPT
+        firewall</span>-cmd --permanent --direct --add-rule ipv4 filter OUTPUT <span style="color: #800080;">0</span> -p gre -j ACCEPT</pre>
+        </div>
+        <p style="margin-left: 30px;">9.8&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置规则允许数据包由eth0和ppp+接口中进出</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --permanent --direct --add-rule ipv4 filter FORWARD <span style="color: #800080;">0</span> -i ppp+ -o eth0 -<span style="color: #000000;">j ACCEPT
+        
+        firewall</span>-cmd --permanent --direct --add-rule ipv4 filter FORWARD <span style="color: #800080;">0</span> -i eth0 -o ppp+ -j ACCEPT</pre>
+        </div>
+        <p style="margin-left: 30px;">9.9&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 设置转发规则，从源地址发出的所有包都进行伪装，改变地址，由eth0发出：</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --permanent --direct --passthrough ipv4 -t nat -I POSTROUTING -o eth0 -j MASQUERADE -s <span style="color: #800080;">192.168</span>.<span style="color: #800080;">0.0</span>/<span style="color: #800080;">24</span></pre>
+        </div>
+        <p>10&nbsp;&nbsp;&nbsp;&nbsp; 重启服务器：</p>
+        <div class="cnblogs_code">
+        <pre>firewall-cmd --<span style="color: #000000;">reload
+        systemctl restart pptpd</span></pre>
+        </div>
+        
+    </body>
+</html>
