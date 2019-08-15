@@ -143,3 +143,10 @@ function md5_decode($code)
     $code = \str_replace('*', 'e', $code);
     return $code;
 }
+//时间戳转时分秒
+function time_to_his($time){
+    $s = $time % 60;
+    $m = floor($time % 3600);
+    $h = floor($time % 86400);
+    return $h.':'.$m.':'.$s;
+}
