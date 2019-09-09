@@ -13,7 +13,6 @@
 	.ztree {
 		width: 100% !important;
 		border: none !important;
-		height: 80vh !important;
 	}
 
 	.ztree * {
@@ -36,20 +35,21 @@
 </style>
 <div class="main_content">
 	<div class="main_content_box">
-		<!--  -->
 		<div class="main_content_header clearfix">
-			<div class="btn_line fl">
-				<button class="btn blue" onclick="saveCat()"><a
+			<div class="btn_line fl" style="width:100%">
+				<button class="btn blue" onclick="saveCat()" style="width:80px;"><a
 						style="display: inline-block;width: 100%;height: 100%;color:#fff;"
 						href="javascript:;">保存</a></button>
+				<button class="btn blue" style="width:100px;margin-left: 20px;"><a
+						style="display: inline-block;width: 100%;height: 100%;color:#fff;"
+						href="/admin/cat/list">图片展示</a></button>
 			</div>
 		</div>
-		<div class="zTreeDemoBackground left">
-			<ul id="treeDemo" class="ztree"></ul>
+		<div class="zTreeDemoBackground left" style="height: 100%;">
+			<ul id="treeDemo" class="ztree" style="height: 100%;"></ul>
 		</div>
 	</div>
 </div>
-<!-- <div class="main_footer"></div> -->
 </div>
 {include file="public/footer" /}
 <script type="text/javascript">
