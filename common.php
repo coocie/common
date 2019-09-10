@@ -131,6 +131,17 @@ function md5_encode($code)
     return $code;
 }
 /**
+ * 更改图片大小
+ */
+function changeImgSize($img, $maxsize)
+{
+    if (!file_exists($img)) {
+        return false;
+    }
+    $oldimg = \think\Image::open($img);
+    $oldimg->thumb($maxsize, $maxsize)->save($img);
+}
+/**
  * md5简单解密
  */
 function md5_decode($code)
@@ -150,3 +161,5 @@ function time_to_his($time){
     $h = floor($time % 86400);
     return $h.':'.$m.':'.$s;
 }
+
+
