@@ -68,11 +68,9 @@ class Cat extends Base
                     Db::name('cat')->insert(['tid' => $tid, 'name' => $value['name'], 'status' => 1, 'sort' => $sort, 'pid' => $pid, 'is_end' => 1]);
                 }
                 //如果不是一级分类，就给上级级分类is_end设置0；
-                if ($pid > 1) {
-                    if (!in_array($pid, $pids)) { //避免重复修改
-                        $pids[] = $pid;
-                        Db::name('cat')->where(['tid' => $pid])->update(['is_end' => 0]);
-                    }
+                if (!in_array($pid, $pids)) { //避免重复修改
+                    $pids[] = $pid;
+                    Db::name('cat')->where(['tid' => $pid])->update(['is_end' => 0]);
                 }
             }
             Db::commit();
