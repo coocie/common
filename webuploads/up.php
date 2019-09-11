@@ -1,4 +1,3 @@
-
     public function addvideo(){
 
         $file = request()->file('file');
@@ -7,8 +6,8 @@
         $chunk = input('chunk');
         $chunks = input('chunks');
         $info = $file->move('uploads/video/temporary/'.$id,$name.$chunk);
-        $a = $info->getSaveName();
-        $imgp = str_replace("\\", "/", $a);
+        // $a = $info->getSaveName();
+        // $imgp = str_replace("\\", "/", $a);
         // $imgpath = 'uploads/video/temporary/' . $imgp;//临时路径
         $response = array();
         if ($info) {
