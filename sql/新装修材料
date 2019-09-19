@@ -1,0 +1,305 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : localhost
+ Source Server Type    : MySQL
+ Source Server Version : 50553
+ Source Host           : localhost:3306
+ Source Schema         : jiancai
+
+ Target Server Type    : MySQL
+ Target Server Version : 50553
+ File Encoding         : 65001
+
+ Date: 19/09/2019 16:10:07
+*/
+
+SET NAMES utf8mb4;
+SET FOREIGN_KEY_CHECKS = 0;
+
+-- ----------------------------
+-- Table structure for jc_cat
+-- ----------------------------
+DROP TABLE IF EXISTS `jc_cat`;
+CREATE TABLE `jc_cat`  (
+  `tid` int(10) UNSIGNED NOT NULL COMMENT 'ztreeid',
+  `name` char(20) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '分类名',
+  `pid` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '上级分类id',
+  `sort` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '排序',
+  `create_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '创建时间',
+  `update_time` int(10) UNSIGNED NOT NULL DEFAULT 0 COMMENT '修改时间',
+  `status` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '1正常，0删除',
+  `is_end` tinyint(1) UNSIGNED NOT NULL DEFAULT 1 COMMENT '是否最后一级分类，1是，0否',
+  `pic` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '分类图片',
+  `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `pics` text CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL COMMENT '展示',
+  `detail` varchar(255) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL DEFAULT '' COMMENT '分类描述',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 284 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci COMMENT = '建材分类' ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of jc_cat
+-- ----------------------------
+INSERT INTO `jc_cat` VALUES (1, '环境设计材料', 0, 1, 0, 0, 1, 0, '', 1, '', '');
+INSERT INTO `jc_cat` VALUES (2, '石材', 1, 2, 0, 0, 1, 0, '', 2, '', '');
+INSERT INTO `jc_cat` VALUES (3, '天然石材', 2, 3, 0, 0, 1, 0, '', 3, 'uploads/catshow/20190911/2bef14ff9c2e657208e31e7cb01b0e2d.jpg', '12');
+INSERT INTO `jc_cat` VALUES (37, '踢脚线', 36, 37, 0, 0, 1, 1, '', 5, '', '');
+INSERT INTO `jc_cat` VALUES (38, '墙角线', 36, 38, 0, 0, 1, 1, '', 6, '', '');
+INSERT INTO `jc_cat` VALUES (39, '墙腰线', 36, 39, 0, 0, 1, 1, '', 7, '', '');
+INSERT INTO `jc_cat` VALUES (40, '门窗洞口线', 36, 40, 0, 0, 1, 1, '', 8, '', '');
+INSERT INTO `jc_cat` VALUES (41, '薄木饰面板', 20, 41, 0, 0, 1, 1, '', 9, '', '');
+INSERT INTO `jc_cat` VALUES (42, '木门', 20, 42, 0, 0, 1, 1, '', 10, '', '');
+INSERT INTO `jc_cat` VALUES (43, '木花格', 20, 43, 0, 0, 1, 1, '', 11, '', '');
+INSERT INTO `jc_cat` VALUES (44, '竹制装饰品', 20, 44, 0, 0, 1, 0, '', 12, '', '');
+INSERT INTO `jc_cat` VALUES (45, '竹地板', 44, 45, 0, 0, 1, 1, '', 13, '', '');
+INSERT INTO `jc_cat` VALUES (46, '竹制家具', 44, 46, 0, 0, 1, 1, '', 14, '', '');
+INSERT INTO `jc_cat` VALUES (48, '人造板材', 19, 48, 0, 0, 1, 0, '', 16, '', '');
+INSERT INTO `jc_cat` VALUES (49, '细木工板', 48, 49, 0, 0, 1, 1, '', 17, '', '');
+INSERT INTO `jc_cat` VALUES (50, '胶合板', 48, 50, 0, 0, 1, 1, '', 18, '', '');
+INSERT INTO `jc_cat` VALUES (51, '宝丽板', 48, 51, 0, 0, 1, 1, '', 19, '', '');
+INSERT INTO `jc_cat` VALUES (52, '刨花板', 48, 52, 0, 0, 1, 1, '', 20, '', '');
+INSERT INTO `jc_cat` VALUES (53, '纤维板', 48, 53, 0, 0, 1, 1, '', 21, '', '');
+INSERT INTO `jc_cat` VALUES (54, '澳松板', 48, 54, 0, 0, 1, 1, '', 22, '', '');
+INSERT INTO `jc_cat` VALUES (55, '木丝木屑板', 48, 55, 0, 0, 1, 1, '', 23, '', '');
+INSERT INTO `jc_cat` VALUES (56, '指接板', 48, 56, 0, 0, 1, 1, '', 24, '', '');
+INSERT INTO `jc_cat` VALUES (57, '麦秸板', 48, 57, 0, 0, 1, 1, '', 25, '', '');
+INSERT INTO `jc_cat` VALUES (58, '木材新材料', 19, 58, 0, 0, 1, 0, '', 26, '', '');
+INSERT INTO `jc_cat` VALUES (59, '水泥刨花板', 58, 59, 0, 0, 1, 1, '', 27, '', '');
+INSERT INTO `jc_cat` VALUES (60, '液态木liquid wood', 58, 60, 0, 0, 1, 1, '', 28, '', '');
+INSERT INTO `jc_cat` VALUES (61, '木挂板', 58, 61, 0, 0, 1, 1, '', 29, '', '');
+INSERT INTO `jc_cat` VALUES (8, '人造石材', 2, 8, 0, 0, 1, 0, '', 34, 'uploads/catshow/20190910/a584d1aff6dab87b1d0cc2efeecf8a40.jpg', 'hjhjhjghfffffffffffffffffffffffffffffffffh');
+INSERT INTO `jc_cat` VALUES (62, '陶瓷', 1, 62, 0, 0, 1, 0, '', 45, '', '');
+INSERT INTO `jc_cat` VALUES (63, '陶瓷墙地砖', 62, 63, 0, 0, 1, 0, '', 46, '', '');
+INSERT INTO `jc_cat` VALUES (65, '玻化砖', 63, 65, 0, 0, 1, 1, '', 48, '', '');
+INSERT INTO `jc_cat` VALUES (66, '劈离砖', 63, 66, 0, 0, 1, 1, '', 49, '', '');
+INSERT INTO `jc_cat` VALUES (67, '陶瓷透水砖', 63, 67, 0, 0, 1, 1, '', 50, '', '');
+INSERT INTO `jc_cat` VALUES (68, '仿古砖', 63, 68, 0, 0, 1, 1, '', 51, '', '');
+INSERT INTO `jc_cat` VALUES (69, '金属光泽釉面砖', 63, 69, 0, 0, 1, 1, '', 52, '', '');
+INSERT INTO `jc_cat` VALUES (70, '大颗粒瓷质砖', 63, 70, 0, 0, 1, 1, '', 53, '', '');
+INSERT INTO `jc_cat` VALUES (71, '麻面砖', 63, 71, 0, 0, 1, 1, '', 54, '', '');
+INSERT INTO `jc_cat` VALUES (72, '瓷质彩胎砖', 63, 72, 0, 0, 1, 1, '', 55, '', '');
+INSERT INTO `jc_cat` VALUES (73, '仿天然石材墙面砖', 63, 73, 0, 0, 1, 1, '', 56, '', '');
+INSERT INTO `jc_cat` VALUES (74, '装饰木纹砖', 63, 74, 0, 0, 1, 1, '', 57, '', '');
+INSERT INTO `jc_cat` VALUES (75, '装饰琉璃', 62, 75, 0, 0, 1, 0, '', 58, '', '');
+INSERT INTO `jc_cat` VALUES (76, '琉璃瓦', 75, 76, 0, 0, 1, 1, '', 59, '', '');
+INSERT INTO `jc_cat` VALUES (77, '琉璃构建', 75, 77, 0, 0, 1, 1, '', 60, '', '');
+INSERT INTO `jc_cat` VALUES (78, '新型装饰陶瓷品', 62, 78, 0, 0, 1, 0, '', 61, '', '');
+INSERT INTO `jc_cat` VALUES (79, '陶瓷浮雕壁画', 78, 79, 0, 0, 1, 1, '', 62, '', '');
+INSERT INTO `jc_cat` VALUES (80, '陶土板', 78, 80, 0, 0, 1, 1, '', 63, '', '');
+INSERT INTO `jc_cat` VALUES (81, '软性陶瓷', 78, 81, 0, 0, 1, 1, '', 64, '', '');
+INSERT INTO `jc_cat` VALUES (82, '陶瓷彩铝', 78, 82, 0, 0, 1, 1, '', 65, '', '');
+INSERT INTO `jc_cat` VALUES (83, '皮革砖', 78, 83, 0, 0, 1, 1, '', 66, '', '');
+INSERT INTO `jc_cat` VALUES (84, '黑瓷装饰板', 78, 84, 0, 0, 1, 1, '', 67, '', '');
+INSERT INTO `jc_cat` VALUES (85, '陶瓷彩色波纹贴面砖', 78, 85, 0, 0, 1, 1, '', 68, '', '');
+INSERT INTO `jc_cat` VALUES (202, '织物', 1, 202, 0, 0, 1, 0, '', 69, '', '');
+INSERT INTO `jc_cat` VALUES (203, '墙面装饰织物', 202, 203, 0, 0, 1, 0, '', 70, '', '');
+INSERT INTO `jc_cat` VALUES (204, '织物壁纸', 203, 204, 0, 0, 1, 1, '', 71, '', '');
+INSERT INTO `jc_cat` VALUES (223, '塑料', 1, 223, 0, 0, 1, 0, '', 72, '', '');
+INSERT INTO `jc_cat` VALUES (224, '聚碳酸酯', 223, 224, 0, 0, 1, 1, '', 73, '', '');
+INSERT INTO `jc_cat` VALUES (225, '丙烯酸塑料', 223, 225, 0, 0, 1, 1, '', 74, '', '');
+INSERT INTO `jc_cat` VALUES (226, '聚氯乙烯PVC', 223, 226, 0, 0, 1, 1, '', 75, '', '');
+INSERT INTO `jc_cat` VALUES (227, '玻璃纤维增强塑料GRP', 223, 227, 0, 0, 1, 1, '', 76, '', '');
+INSERT INTO `jc_cat` VALUES (228, '聚苯乙烯', 223, 228, 0, 0, 1, 1, '', 77, '', '');
+INSERT INTO `jc_cat` VALUES (229, '塑料制品', 223, 229, 0, 0, 1, 0, '', 78, '', '');
+INSERT INTO `jc_cat` VALUES (230, 'PC阳光板', 229, 230, 0, 0, 1, 1, '', 79, '', '');
+INSERT INTO `jc_cat` VALUES (231, 'PC耐力板', 229, 231, 0, 0, 1, 1, '', 80, '', '');
+INSERT INTO `jc_cat` VALUES (232, 'PC光扩散板', 229, 232, 0, 0, 1, 1, '', 81, '', '');
+INSERT INTO `jc_cat` VALUES (233, '亚克力', 229, 233, 0, 0, 1, 1, '', 82, '', '');
+INSERT INTO `jc_cat` VALUES (234, '塑木制品', 229, 234, 0, 0, 1, 1, '', 83, '', '');
+INSERT INTO `jc_cat` VALUES (235, '塑料草皮', 229, 235, 0, 0, 1, 1, '', 84, '', '');
+INSERT INTO `jc_cat` VALUES (236, '复合高分子井盖', 229, 236, 0, 0, 1, 1, '', 85, '', '');
+INSERT INTO `jc_cat` VALUES (237, '橡胶地板', 229, 237, 0, 0, 1, 1, '', 86, '', '');
+INSERT INTO `jc_cat` VALUES (238, '塑料盲道', 229, 238, 0, 0, 1, 1, '', 87, '', '');
+INSERT INTO `jc_cat` VALUES (239, '绿化种植箱', 229, 239, 0, 0, 1, 1, '', 88, '', '');
+INSERT INTO `jc_cat` VALUES (240, '植草格，树池篦子', 229, 240, 0, 0, 1, 1, '', 89, '', '');
+INSERT INTO `jc_cat` VALUES (241, '混凝土', 1, 241, 0, 0, 1, 0, '', 90, '', '');
+INSERT INTO `jc_cat` VALUES (242, '沥青混凝土', 241, 242, 0, 0, 1, 0, '', 91, '', '');
+INSERT INTO `jc_cat` VALUES (243, '透水沥青', 242, 243, 0, 0, 1, 1, '', 92, '', '');
+INSERT INTO `jc_cat` VALUES (244, '填料沥青', 242, 244, 0, 0, 1, 1, '', 93, '', '');
+INSERT INTO `jc_cat` VALUES (245, '装饰混凝土', 241, 245, 0, 0, 1, 0, '', 94, '', '');
+INSERT INTO `jc_cat` VALUES (246, '压印混凝土', 245, 246, 0, 0, 1, 1, '', 95, '', '');
+INSERT INTO `jc_cat` VALUES (247, '清水混凝土', 245, 247, 0, 0, 1, 1, '', 96, '', '');
+INSERT INTO `jc_cat` VALUES (248, '彩色混凝土地坪', 245, 248, 0, 0, 1, 1, '', 97, '', '');
+INSERT INTO `jc_cat` VALUES (249, '露石混凝土', 245, 249, 0, 0, 1, 1, '', 98, '', '');
+INSERT INTO `jc_cat` VALUES (250, '聚合物仿石地坪', 245, 250, 0, 0, 1, 1, '', 99, '', '');
+INSERT INTO `jc_cat` VALUES (251, '纤维混凝土', 241, 251, 0, 0, 1, 0, '', 100, '', '');
+INSERT INTO `jc_cat` VALUES (252, '钢纤维混凝土', 251, 252, 0, 0, 1, 1, '', 101, '', '');
+INSERT INTO `jc_cat` VALUES (253, '合成纤维混凝土', 251, 253, 0, 0, 1, 1, '', 102, '', '');
+INSERT INTO `jc_cat` VALUES (254, '玻璃纤维混凝土', 251, 254, 0, 0, 1, 1, '', 103, '', '');
+INSERT INTO `jc_cat` VALUES (255, '透水混凝土', 251, 255, 0, 0, 1, 1, '', 104, '', '');
+INSERT INTO `jc_cat` VALUES (181, '外墙漆', 163, 181, 0, 0, 1, 0, '', 105, '', '');
+INSERT INTO `jc_cat` VALUES (182, '乳胶外墙漆（合成树脂）', 181, 182, 0, 0, 1, 1, '', 106, '', '');
+INSERT INTO `jc_cat` VALUES (183, '乳胶沙壁外墙漆（合成树脂）', 181, 183, 0, 0, 1, 1, '', 107, '', '');
+INSERT INTO `jc_cat` VALUES (184, '溶剂型外墙漆', 181, 184, 0, 0, 1, 1, '', 108, '', '');
+INSERT INTO `jc_cat` VALUES (185, '复层外墙漆', 181, 185, 0, 0, 1, 1, '', 109, '', '');
+INSERT INTO `jc_cat` VALUES (186, '无机外墙漆', 181, 186, 0, 0, 1, 1, '', 110, '', '');
+INSERT INTO `jc_cat` VALUES (187, '弹性建筑外墙漆', 181, 187, 0, 0, 1, 1, '', 111, '', '');
+INSERT INTO `jc_cat` VALUES (188, '地面漆', 163, 188, 0, 0, 1, 0, '', 112, '', '');
+INSERT INTO `jc_cat` VALUES (189, '乙烯类地面漆', 188, 189, 0, 0, 1, 1, '', 113, '', '');
+INSERT INTO `jc_cat` VALUES (190, '环氧树脂漆', 188, 190, 0, 0, 1, 1, '', 114, '', '');
+INSERT INTO `jc_cat` VALUES (191, '聚氨酯地面漆', 188, 191, 0, 0, 1, 1, '', 115, '', '');
+INSERT INTO `jc_cat` VALUES (192, '丙烯酸地面漆', 188, 192, 0, 0, 1, 1, '', 116, '', '');
+INSERT INTO `jc_cat` VALUES (193, '特种漆', 163, 193, 0, 0, 1, 0, '', 117, '', '');
+INSERT INTO `jc_cat` VALUES (194, '防水漆', 193, 194, 0, 0, 1, 1, '', 118, '', '');
+INSERT INTO `jc_cat` VALUES (195, '防火漆', 193, 195, 0, 0, 1, 1, '', 119, '', '');
+INSERT INTO `jc_cat` VALUES (196, '防毒漆', 193, 196, 0, 0, 1, 1, '', 120, '', '');
+INSERT INTO `jc_cat` VALUES (197, '抗静电漆', 193, 197, 0, 0, 1, 1, '', 121, '', '');
+INSERT INTO `jc_cat` VALUES (198, '耐高温漆', 193, 198, 0, 0, 1, 1, '', 122, '', '');
+INSERT INTO `jc_cat` VALUES (199, '防锈漆', 193, 199, 0, 0, 1, 1, '', 123, '', '');
+INSERT INTO `jc_cat` VALUES (200, '木器漆', 193, 200, 0, 0, 1, 1, '', 124, '', '');
+INSERT INTO `jc_cat` VALUES (201, '金属漆', 193, 201, 0, 0, 1, 1, '', 125, '', '');
+INSERT INTO `jc_cat` VALUES (256, '新型混凝土', 241, 256, 0, 0, 1, 0, '', 126, '', '');
+INSERT INTO `jc_cat` VALUES (257, '混凝土石', 256, 257, 0, 0, 1, 1, '', 127, '', '');
+INSERT INTO `jc_cat` VALUES (258, '透光混凝土', 256, 258, 0, 0, 1, 1, '', 128, '', '');
+INSERT INTO `jc_cat` VALUES (259, '混凝土制品', 241, 259, 0, 0, 1, 0, '', 129, '', '');
+INSERT INTO `jc_cat` VALUES (260, '透水砖', 259, 260, 0, 0, 1, 1, '', 130, '', '');
+INSERT INTO `jc_cat` VALUES (261, '废弃混凝土再利用', 259, 261, 0, 0, 1, 1, '', 131, '', '');
+INSERT INTO `jc_cat` VALUES (170, '马来漆', 169, 170, 0, 0, 1, 1, '', 132, '', '');
+INSERT INTO `jc_cat` VALUES (171, '真石漆', 169, 171, 0, 0, 1, 1, '', 133, '', '');
+INSERT INTO `jc_cat` VALUES (172, '复层肌理漆', 169, 172, 0, 0, 1, 1, '', 134, '', '');
+INSERT INTO `jc_cat` VALUES (173, '金属箔质感漆', 169, 173, 0, 0, 1, 1, '', 135, '', '');
+INSERT INTO `jc_cat` VALUES (174, '液体壁纸', 169, 174, 0, 0, 1, 1, '', 136, '', '');
+INSERT INTO `jc_cat` VALUES (175, '质感涂料', 169, 175, 0, 0, 1, 1, '', 137, '', '');
+INSERT INTO `jc_cat` VALUES (176, '仿石漆', 169, 176, 0, 0, 1, 1, '', 138, '', '');
+INSERT INTO `jc_cat` VALUES (177, '艺术帛', 169, 177, 0, 0, 1, 1, '', 139, '', '');
+INSERT INTO `jc_cat` VALUES (178, '平面艺术漆', 169, 178, 0, 0, 1, 1, '', 140, '', '');
+INSERT INTO `jc_cat` VALUES (179, '裂纹漆，贝母漆，砂岩雕刻漆，墙体浮雕漆', 169, 179, 0, 0, 1, 1, '', 141, '', '');
+INSERT INTO `jc_cat` VALUES (180, '彩绘壁画', 169, 180, 0, 0, 1, 1, '', 142, '', '');
+INSERT INTO `jc_cat` VALUES (19, '木材', 1, 19, 0, 0, 1, 0, '', 143, '', '');
+INSERT INTO `jc_cat` VALUES (20, '木质装饰制品', 19, 20, 0, 0, 1, 0, '', 144, '', '');
+INSERT INTO `jc_cat` VALUES (21, '实木地板', 20, 21, 0, 0, 1, 0, '', 145, '', '');
+INSERT INTO `jc_cat` VALUES (23, '实木拼花地板', 21, 23, 0, 0, 1, 1, 'uploads/static/cat/cat147.png', 147, '', '');
+INSERT INTO `jc_cat` VALUES (24, '实木马赛克', 21, 24, 0, 0, 1, 1, 'uploads/static/cat/cat148.png', 148, '', '');
+INSERT INTO `jc_cat` VALUES (25, '复合地板', 20, 25, 0, 0, 1, 1, '', 149, '', '');
+INSERT INTO `jc_cat` VALUES (26, '防腐木', 20, 26, 0, 0, 1, 0, 'uploads/static/cat/cat150.png', 150, '', '');
+INSERT INTO `jc_cat` VALUES (27, '俄罗斯樟子松', 26, 27, 0, 0, 1, 1, 'uploads/static/cat/cat151.png', 151, '', '');
+INSERT INTO `jc_cat` VALUES (28, '北欧赤松', 26, 28, 0, 0, 1, 1, '', 152, '', '');
+INSERT INTO `jc_cat` VALUES (29, '西部红雪松', 26, 29, 0, 0, 1, 1, '', 153, '', '');
+INSERT INTO `jc_cat` VALUES (30, '芬兰木', 26, 30, 0, 0, 1, 1, '', 154, '', '');
+INSERT INTO `jc_cat` VALUES (31, '菠萝格等', 26, 31, 0, 0, 1, 1, '', 155, '', '');
+INSERT INTO `jc_cat` VALUES (32, '碳化木', 20, 32, 0, 0, 1, 1, '', 156, '', '');
+INSERT INTO `jc_cat` VALUES (33, '软木', 20, 33, 0, 0, 1, 0, '', 157, '', '');
+INSERT INTO `jc_cat` VALUES (34, '软木地板', 33, 34, 0, 0, 1, 1, '', 158, '', '');
+INSERT INTO `jc_cat` VALUES (35, '软木墙板', 33, 35, 0, 0, 1, 1, '', 159, '', '');
+INSERT INTO `jc_cat` VALUES (36, '木装饰线条', 20, 36, 0, 0, 1, 0, '', 160, '', '');
+INSERT INTO `jc_cat` VALUES (86, '玻璃', 1, 86, 0, 0, 1, 0, '', 161, '', '');
+INSERT INTO `jc_cat` VALUES (87, '装饰玻璃', 86, 87, 0, 0, 1, 0, '', 162, '', '');
+INSERT INTO `jc_cat` VALUES (88, '平板玻璃', 87, 88, 0, 0, 1, 1, '', 163, '', '');
+INSERT INTO `jc_cat` VALUES (89, '压花玻璃', 87, 89, 0, 0, 1, 1, '', 164, '', '');
+INSERT INTO `jc_cat` VALUES (90, '釉面玻璃', 87, 90, 0, 0, 1, 1, '', 165, '', '');
+INSERT INTO `jc_cat` VALUES (91, '镜面玻璃', 87, 91, 0, 0, 1, 1, '', 166, '', '');
+INSERT INTO `jc_cat` VALUES (92, '冰花玻璃', 87, 92, 0, 0, 1, 1, '', 167, '', '');
+INSERT INTO `jc_cat` VALUES (93, '玻璃砖', 87, 93, 0, 0, 1, 1, '', 168, '', '');
+INSERT INTO `jc_cat` VALUES (94, '玻璃马赛克', 87, 94, 0, 0, 1, 1, '', 169, '', '');
+INSERT INTO `jc_cat` VALUES (95, '彩绘玻璃', 87, 95, 0, 0, 1, 1, '', 170, '', '');
+INSERT INTO `jc_cat` VALUES (96, '热熔玻璃', 87, 96, 0, 0, 1, 1, '', 171, '', '');
+INSERT INTO `jc_cat` VALUES (97, '乳白玻璃', 87, 97, 0, 0, 1, 1, '', 175, '', '');
+INSERT INTO `jc_cat` VALUES (98, '磨砂玻璃', 87, 98, 0, 0, 1, 1, '', 176, '', '');
+INSERT INTO `jc_cat` VALUES (99, '电致变色玻璃', 87, 99, 0, 0, 1, 1, '', 177, '', '');
+INSERT INTO `jc_cat` VALUES (100, '镭射玻璃', 87, 100, 0, 0, 1, 1, '', 178, '', '');
+INSERT INTO `jc_cat` VALUES (101, '视飘玻璃', 87, 101, 0, 0, 1, 1, '', 179, '', '');
+INSERT INTO `jc_cat` VALUES (102, '减反射玻璃', 87, 102, 0, 0, 1, 1, '', 180, '', '');
+INSERT INTO `jc_cat` VALUES (103, '节能玻璃', 86, 103, 0, 0, 1, 0, '', 181, '', '');
+INSERT INTO `jc_cat` VALUES (104, '吸热玻璃', 103, 104, 0, 0, 1, 1, '', 182, '', '');
+INSERT INTO `jc_cat` VALUES (105, '热反射玻璃', 103, 105, 0, 0, 1, 1, '', 183, '', '');
+INSERT INTO `jc_cat` VALUES (106, '低辐射镀膜玻璃', 103, 106, 0, 0, 1, 1, '', 184, '', '');
+INSERT INTO `jc_cat` VALUES (107, '中空玻璃', 103, 107, 0, 0, 1, 1, '', 185, '', '');
+INSERT INTO `jc_cat` VALUES (108, '光致变色玻璃', 103, 108, 0, 0, 1, 1, '', 186, '', '');
+INSERT INTO `jc_cat` VALUES (109, '泡沫玻璃', 103, 109, 0, 0, 1, 1, '', 187, '', '');
+INSERT INTO `jc_cat` VALUES (110, '自发光玻璃', 103, 110, 0, 0, 1, 1, '', 188, '', '');
+INSERT INTO `jc_cat` VALUES (111, '安全玻璃', 86, 111, 0, 0, 1, 0, '', 189, '', '');
+INSERT INTO `jc_cat` VALUES (112, '钢化玻璃', 111, 112, 0, 0, 1, 1, '', 190, '', '');
+INSERT INTO `jc_cat` VALUES (113, '弯钢化玻璃，热弯玻璃', 111, 113, 0, 0, 1, 1, '', 191, '', '');
+INSERT INTO `jc_cat` VALUES (114, '夹丝玻璃', 111, 114, 0, 0, 1, 1, '', 192, '', '');
+INSERT INTO `jc_cat` VALUES (115, '夹胶玻璃', 111, 115, 0, 0, 1, 1, '', 193, '', '');
+INSERT INTO `jc_cat` VALUES (116, '钛化玻璃', 111, 116, 0, 0, 1, 1, '', 194, '', '');
+INSERT INTO `jc_cat` VALUES (117, '防弹玻璃', 111, 117, 0, 0, 1, 1, '', 195, '', '');
+INSERT INTO `jc_cat` VALUES (118, '玻璃幕墙', 86, 118, 0, 0, 1, 0, '', 196, '', '');
+INSERT INTO `jc_cat` VALUES (119, '框架式玻璃幕墙', 118, 119, 0, 0, 1, 1, '', 197, '', '');
+INSERT INTO `jc_cat` VALUES (120, '点支式玻璃幕墙', 118, 120, 0, 0, 1, 1, '', 198, '', '');
+INSERT INTO `jc_cat` VALUES (121, '玻璃肋胶式全玻璃幕墙', 118, 121, 0, 0, 1, 1, '', 199, '', '');
+INSERT INTO `jc_cat` VALUES (122, '新型玻璃幕墙', 118, 122, 0, 0, 1, 1, '', 200, '', '');
+INSERT INTO `jc_cat` VALUES (123, '新型玻璃', 86, 123, 0, 0, 1, 0, '', 201, '', '');
+INSERT INTO `jc_cat` VALUES (124, '微晶玻璃', 123, 124, 0, 0, 1, 1, '', 202, '', '');
+INSERT INTO `jc_cat` VALUES (125, '烤漆玻璃', 123, 125, 0, 0, 1, 1, '', 203, '', '');
+INSERT INTO `jc_cat` VALUES (126, '聚晶玻璃', 123, 126, 0, 0, 1, 1, '', 204, '', '');
+INSERT INTO `jc_cat` VALUES (127, '镶嵌玻璃', 123, 127, 0, 0, 1, 1, '', 205, '', '');
+INSERT INTO `jc_cat` VALUES (128, '玻璃百叶窗', 123, 128, 0, 0, 1, 1, '', 206, '', '');
+INSERT INTO `jc_cat` VALUES (129, 'LED玻璃砖灯', 123, 129, 0, 0, 1, 1, '', 207, '', '');
+INSERT INTO `jc_cat` VALUES (130, '装饰琉璃砖', 123, 130, 0, 0, 1, 1, '', 208, '', '');
+INSERT INTO `jc_cat` VALUES (131, '金属', 1, 131, 0, 0, 1, 0, '', 209, '', '');
+INSERT INTO `jc_cat` VALUES (132, '黑色金属', 131, 132, 0, 0, 1, 0, '', 210, '', '');
+INSERT INTO `jc_cat` VALUES (137, '有色金属', 131, 137, 0, 0, 1, 0, '', 211, '', '');
+INSERT INTO `jc_cat` VALUES (148, '石膏', 1, 148, 0, 0, 1, 0, '', 212, '', '');
+INSERT INTO `jc_cat` VALUES (163, '油漆', 1, 163, 0, 0, 1, 0, '', 213, '', '');
+INSERT INTO `jc_cat` VALUES (164, '内墙和顶面漆', 163, 164, 0, 0, 1, 0, '', 214, '', '');
+INSERT INTO `jc_cat` VALUES (165, '水溶性内墙漆', 164, 165, 0, 0, 1, 1, '', 215, '', '');
+INSERT INTO `jc_cat` VALUES (169, '艺术漆', 164, 169, 0, 0, 1, 0, '', 216, '', '');
+INSERT INTO `jc_cat` VALUES (149, '板材类石膏制品', 148, 149, 0, 0, 1, 0, '', 218, '', '');
+INSERT INTO `jc_cat` VALUES (133, '碳素结构钢', 132, 133, 0, 0, 1, 1, '', 219, '', '');
+INSERT INTO `jc_cat` VALUES (4, '花岗岩', 3, 4, 0, 0, 1, 1, '', 220, '', '');
+INSERT INTO `jc_cat` VALUES (5, '大理石', 3, 5, 0, 0, 1, 1, '', 221, '', '');
+INSERT INTO `jc_cat` VALUES (6, '砂岩', 3, 6, 0, 0, 1, 1, '', 222, '', '');
+INSERT INTO `jc_cat` VALUES (7, '青石', 3, 7, 0, 0, 1, 1, '', 223, '', '');
+INSERT INTO `jc_cat` VALUES (9, '人造水磨石（水泥型人造石）', 8, 9, 0, 0, 1, 1, '', 224, '', '');
+INSERT INTO `jc_cat` VALUES (10, '聚酯型人造石', 8, 10, 0, 0, 1, 1, '', 225, '', '');
+INSERT INTO `jc_cat` VALUES (11, '复合型人造石', 8, 11, 0, 0, 1, 1, '', 226, '', '');
+INSERT INTO `jc_cat` VALUES (12, '烧结型人造石', 8, 12, 0, 0, 1, 1, '', 227, '', '');
+INSERT INTO `jc_cat` VALUES (13, '微晶玻璃型人造石', 8, 13, 0, 0, 1, 1, '', 228, '', '');
+INSERT INTO `jc_cat` VALUES (14, '石材新材料', 2, 14, 0, 0, 1, 0, '', 229, '', '');
+INSERT INTO `jc_cat` VALUES (15, '大理石瓷砖复合板', 14, 15, 0, 0, 1, 1, '', 230, '', '');
+INSERT INTO `jc_cat` VALUES (16, '大理石铝塑复合板', 14, 16, 0, 0, 1, 1, '', 231, '', '');
+INSERT INTO `jc_cat` VALUES (17, '超薄花岗岩铝塑复合板', 14, 17, 0, 0, 1, 1, '', 232, '', '');
+INSERT INTO `jc_cat` VALUES (18, '蜂窝复合板', 14, 18, 0, 0, 1, 1, '', 233, '', '');
+INSERT INTO `jc_cat` VALUES (22, '实木条木地板', 21, 22, 0, 0, 1, 1, '', 234, '', '');
+INSERT INTO `jc_cat` VALUES (47, '藤制装饰品', 20, 47, 0, 0, 1, 1, '', 235, '', '');
+INSERT INTO `jc_cat` VALUES (64, '抛光砖', 63, 64, 0, 0, 1, 1, '', 236, '', '');
+INSERT INTO `jc_cat` VALUES (134, '低合金高强度结构钢', 132, 134, 0, 0, 1, 1, '', 237, '', '');
+INSERT INTO `jc_cat` VALUES (135, '彩色钢板', 132, 135, 0, 0, 1, 1, '', 238, '', '');
+INSERT INTO `jc_cat` VALUES (136, '不锈钢', 132, 136, 0, 0, 1, 1, '', 239, '', '');
+INSERT INTO `jc_cat` VALUES (138, '铜及铜合金', 137, 138, 0, 0, 1, 1, '', 240, '', '');
+INSERT INTO `jc_cat` VALUES (139, '铝及铝合金', 137, 139, 0, 0, 1, 1, '', 241, '', '');
+INSERT INTO `jc_cat` VALUES (140, '常见新型金属', 131, 140, 0, 0, 1, 0, '', 242, '', '');
+INSERT INTO `jc_cat` VALUES (141, '钛锌板', 140, 141, 0, 0, 1, 1, '', 243, '', '');
+INSERT INTO `jc_cat` VALUES (142, '钛金属板', 140, 142, 0, 0, 1, 1, '', 244, '', '');
+INSERT INTO `jc_cat` VALUES (143, '太古铜板', 140, 143, 0, 0, 1, 1, '', 245, '', '');
+INSERT INTO `jc_cat` VALUES (144, '金属网', 140, 144, 0, 0, 1, 1, '', 246, '', '');
+INSERT INTO `jc_cat` VALUES (145, '金属布', 140, 145, 0, 0, 1, 1, '', 247, '', '');
+INSERT INTO `jc_cat` VALUES (146, '金属帘', 140, 146, 0, 0, 1, 1, '', 248, '', '');
+INSERT INTO `jc_cat` VALUES (147, '金属马赛克', 140, 147, 0, 0, 1, 1, '', 249, '', '');
+INSERT INTO `jc_cat` VALUES (150, '装饰石膏板', 149, 150, 0, 0, 1, 1, '', 250, '', '');
+INSERT INTO `jc_cat` VALUES (151, '纸面石膏板', 149, 151, 0, 0, 1, 1, '', 251, '', '');
+INSERT INTO `jc_cat` VALUES (152, '镶嵌式石膏板', 149, 152, 0, 0, 1, 1, '', 252, '', '');
+INSERT INTO `jc_cat` VALUES (153, '耐火纸面石膏板', 149, 153, 0, 0, 1, 1, '', 253, '', '');
+INSERT INTO `jc_cat` VALUES (154, '耐水纸面石膏板', 149, 154, 0, 0, 1, 1, '', 254, '', '');
+INSERT INTO `jc_cat` VALUES (155, '吸声用穿孔石膏板', 149, 155, 0, 0, 1, 1, '', 255, '', '');
+INSERT INTO `jc_cat` VALUES (156, '布面石膏', 149, 156, 0, 0, 1, 1, '', 256, '', '');
+INSERT INTO `jc_cat` VALUES (157, '艺术石膏类制品', 148, 157, 0, 0, 1, 0, '', 257, '', '');
+INSERT INTO `jc_cat` VALUES (158, '石膏造型', 157, 158, 0, 0, 1, 1, '', 258, '', '');
+INSERT INTO `jc_cat` VALUES (159, '装饰石膏线角', 157, 159, 0, 0, 1, 1, '', 259, '', '');
+INSERT INTO `jc_cat` VALUES (160, '石膏艺术顶棚、灯圈、角花', 157, 160, 0, 0, 1, 1, '', 260, '', '');
+INSERT INTO `jc_cat` VALUES (161, '石膏艺术廊柱子', 157, 161, 0, 0, 1, 1, '', 261, '', '');
+INSERT INTO `jc_cat` VALUES (162, '石膏砌块', 157, 162, 0, 0, 1, 1, '', 262, '', '');
+INSERT INTO `jc_cat` VALUES (166, '乳胶漆（合成树脂乳液内墙漆）', 164, 166, 0, 0, 1, 1, '', 263, '', '');
+INSERT INTO `jc_cat` VALUES (167, '多彩漆', 164, 167, 0, 0, 1, 1, '', 264, '', '');
+INSERT INTO `jc_cat` VALUES (168, '仿瓷漆', 164, 168, 0, 0, 1, 1, '', 265, '', '');
+INSERT INTO `jc_cat` VALUES (205, '玻璃纤维印花墙布', 203, 205, 0, 0, 1, 1, '', 266, '', '');
+INSERT INTO `jc_cat` VALUES (206, '无纺墙布', 203, 206, 0, 0, 1, 1, '', 267, '', '');
+INSERT INTO `jc_cat` VALUES (207, '棉纺装饰墙布', 203, 207, 0, 0, 1, 1, '', 268, '', '');
+INSERT INTO `jc_cat` VALUES (208, '化纤装饰墙布', 203, 208, 0, 0, 1, 1, '', 269, '', '');
+INSERT INTO `jc_cat` VALUES (209, '绸缎、丝绒、呢料装饰墙布', 203, 209, 0, 0, 1, 1, '', 270, '', '');
+INSERT INTO `jc_cat` VALUES (210, '地毯', 202, 210, 0, 0, 1, 0, '', 271, '', '');
+INSERT INTO `jc_cat` VALUES (211, '纯毛地毯', 210, 211, 0, 0, 1, 1, '', 272, '', '');
+INSERT INTO `jc_cat` VALUES (212, '化纤地毯', 210, 212, 0, 0, 1, 1, '', 273, '', '');
+INSERT INTO `jc_cat` VALUES (213, '混纺地毯', 210, 213, 0, 0, 1, 1, '', 274, '', '');
+INSERT INTO `jc_cat` VALUES (214, '植物纤维地毯', 210, 214, 0, 0, 1, 1, '', 275, '', '');
+INSERT INTO `jc_cat` VALUES (215, '塑料地毯', 210, 215, 0, 0, 1, 1, '', 276, '', '');
+INSERT INTO `jc_cat` VALUES (216, '橡胶地毯', 210, 216, 0, 0, 1, 1, '', 277, '', '');
+INSERT INTO `jc_cat` VALUES (217, '卷帘帷幔', 202, 217, 0, 0, 1, 0, '', 278, '', '');
+INSERT INTO `jc_cat` VALUES (218, '卷帘', 217, 218, 0, 0, 1, 1, '', 279, '', '');
+INSERT INTO `jc_cat` VALUES (219, '折帘', 217, 219, 0, 0, 1, 1, '', 280, '', '');
+INSERT INTO `jc_cat` VALUES (220, '布艺帘', 217, 220, 0, 0, 1, 1, '', 281, '', '');
+INSERT INTO `jc_cat` VALUES (221, '窗纱', 217, 221, 0, 0, 1, 1, '', 282, '', '');
+INSERT INTO `jc_cat` VALUES (222, '线帘', 217, 222, 0, 0, 1, 1, '', 283, '', '');
+
+SET FOREIGN_KEY_CHECKS = 1;
