@@ -1,0 +1,39 @@
+<?php
+//开启gd库
+$text='设置图片背景颜色，这里背景颜色为#f ';//显示的文字
+if(mb_strlen($text)>30){//限制30个字数
+    $text = mb_substr($text,0,30);
+}
+$length = mb_strlen($text);
+
+$width = 800;
+$height = 200;
+
+$size=ceil(($width-100)/$length/96*72);//字体大小  单位是磅  1磅 = 1/72 英寸  1英寸 =  96像素（小字体时）
+
+$font="c:/windows/fonts/STSONG.TTF";//字体类型，这里为黑体，具体请在windows/fonts文件夹中，找相应的font文件
+
+$img=imagecreate($width,$height);//创建一个空白图片
+
+imagecolorallocate($img,0xff,0xff,0xff);//设置图片背景颜色，这里背景颜色为#ffffff，也就是白色
+
+$black=imagecolorallocate($img,0x00,0x00,0x00);//设置字体颜色，这里为#000000，也就是黑色
+
+$fontBox = imagettfbbox($size, 0, $font, $text);//文字水平居中实质,涉及到xy坐标
+
+$fontwidth = ceil($fontBox[2]-$fontBox[0]);
+
+$x = ceil(($width - $fontwidth) / 2);
+
+$fontheight = ceil($fontBox[3]-$fontBox[5]);
+
+$y = ceil(($height - $fontheight) / 2) -$fontBox[5];
+
+imagettftext ( $img, $size, 0, $x, $y, $black, $font, $text);
+
+header('Content-Type: image/png');//发送头信息
+
+imagepng($img);//输出图片，输出png使用imagepng方法，输出gif使用imagegif方法
+
+
+
