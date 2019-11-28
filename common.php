@@ -1,3 +1,36 @@
+/**
+ * curl请求，wbj
+ */ 
+
+function curl_request($url, $isPost = FALSE, $postData = NULL, $useCert = FALSE, $sslCertPath = NULL, $sslKeyPath = NULL)
+{
+    $curl = curl_init();
+    curl_setopt($curl, CURLOPT_TIMEOUT, 30);
+    curl_setopt($curl, CURLOPT_URL, $url);
+    curl_setopt($curl, CURLOPT_HEADER, FALSE);
+    curl_setopt($curl, CURLOPT_RETURNTRANSFER, TRUE);
+    if ($isPost) {
+        curl_setopt($curl, CURLOPT_POST, TRUE);
+        curl_setopt($curl, CURLOPT_POSTFIELDS, $postData);
+    }
+    if ($useCert) {
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, TRUE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 2);
+        curl_setopt($curl, CURLOPT_SSLCERTTYPE, 'PEM');
+        curl_setopt($curl, CURLOPT_SSLCERT, $sslCertPath);
+        curl_setopt($curl, CURLOPT_SSLKEYTYPE, 'PEM');
+        curl_setopt($curl, CURLOPT_SSLKEY, $sslKeyPath);
+    } else {
+        curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, FALSE);
+        curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+    }
+    $result = curl_exec($curl);
+    curl_close($curl);
+    return $result;
+}
+
+
+
 /*
  * 确定时间与当前时间对比
 */
