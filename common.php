@@ -194,5 +194,38 @@ function time_to_his($time){
     $h = floor($time % 86400);
     return $h.':'.$m.':'.$s;
 }
+/**
+ * 处理微信名特殊符号
+*/
+function emoji_encode($nickname){
+    $strEncode = '';
+    $length = mb_strlen($nickname,'utf-8');
+    for ($i=0; $i < $length; $i++) {
+        $_tmpStr = mb_substr($nickname,$i,1,'utf-8');
+        if(strlen($_tmpStr) &gt;= 4){
+            $strEncode .= '[[EMOJI:'.rawurlencode($_tmpStr).']]';
+        }else{
+            $strEncode .= $_tmpStr;
+        }
+    }
+    return $strEncode;
+}
+
+/**
+ * 解码微信名特殊符号
+*/
+
+function emoji_decode($nickname){
+    $arr = explode('[[EMOJI:', $nickname);
+    $strDecode = $nickname;
+    if(count($arr) > 1){
+        $arr1 = explode(']]', $arr[1]);
+        if($arr1[0]){
+            $arr1[0] = rawurldecode($arr1[0]);
+            $strDecode = $arr[0].$arr1[0].$arr1[1];
+        }
+    }
+    return $strDecode;
+}
 
 
