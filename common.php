@@ -202,7 +202,7 @@ function emoji_encode($nickname){
     $length = mb_strlen($nickname,'utf-8');
     for ($i=0; $i < $length; $i++) {
         $_tmpStr = mb_substr($nickname,$i,1,'utf-8');
-        if(strlen($_tmpStr) &gt;= 4){
+        if(strlen($_tmpStr) >= 4){
             $strEncode .= '[[EMOJI:'.rawurlencode($_tmpStr).']]';
         }else{
             $strEncode .= $_tmpStr;
