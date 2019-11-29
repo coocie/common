@@ -1,3 +1,14 @@
+//写调试日志
+function logwrite($txt,$rewrite = 0){
+    if($rewrite){
+        $log = fopen("uploads/log.txt", "w");
+    }else{
+        $log = fopen("uploads/log.txt", "a");
+    }
+    fwrite($log,$txt);
+    fclose($log);
+}
+
 /**
  * curl请求，wbj
  */ 
