@@ -1,3 +1,4 @@
+/*微信浏览器字体会跳一下*/
 body{-webkit-text-size-adjust: 100% !important;}
 body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,button,textarea,p,blockquote,th,td { margin:0; padding:0; }
 body { background-color:#fff; color:#333333; font-size:0.28rem;font-family:-apple-system,BlinkMacSystemFont,Helvetica Neue,PingFang SC,Microsoft YaHei,Source Han Sans SC,Noto Sans CJK SC,WenQuanYi Micro Hei,sans-serif;}
@@ -24,3 +25,8 @@ button,input{ outline:none; border: none; }
 .hide {display:none;}
 .on{ display: block !important;}
 
+/*解决IOS端微信浏览器input，textarea有内上边框阴影*/
+input,textarea{
+	box-shadow:0px 0px 0px rgba(0,0,0,0);
+	-webkit-appearance:none;
+}
