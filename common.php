@@ -271,5 +271,19 @@ function deleteDir($path) {
         @rmdir($path);
     }
 }
-
+/**
+ * 去除字符串html标签
+ * @param [type] $string
+ * @return void
+ */
+function cutstr_html($string){  
+    $string = strip_tags($string);
+    $string = trim($string);  
+    $string = str_replace("\t","",$string); 
+    $string = str_replace("\r\n","",$string);  
+    $string = str_replace("\r","",$string);  
+    $string = str_replace("\n","",$string);  
+    $string = str_replace(" ","",$string);  
+    return trim($string);  
+}
 
