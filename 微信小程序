@@ -1,0 +1,175 @@
+php
+base.php
+    protected function _initialize()
+    {    		
+        $isauth = request()->header()['isauth']??0;//是否验证权限
+        if($isauth){
+            $access = request()->header()['access']??'';
+            if(cache('user.access_token.'.$access)){
+                $openid = cache('user.access_token.'.$access);
+                $user = Db::name('xuser')
+                    ->where(['openid'=>$openid])
+                    ->find();
+                $this->user = $user;
+            }else{    		
+                abort(response(json_encode(['code' => 9,'msg' => '登录态过期，请重新登录','data' => 'user.access_token.'.$access])));
+            }
+        }
+        parent::_initialize();
+    }
+
+user.php
+    //微信登录
+    public function getAccess(){
+        $code = input('code');
+        $return = [];
+        $wechat=Config::get('wechat');
+        if ($code == ''){
+            $return['code'] = -1;
+            $return['msg'] = 'Code不合法';
+        }else{
+            //用code换取session_key
+            $url = 'https://api.weixin.qq.com/sns/jscode2session?appid='.$wechat['appkey'].'&secret='.$wechat['appsecret'].'&js_code='.$code.'&grant_type=authorization_code';
+            $ret = curl_request($url);
+            $ret = json_decode($ret);
+            if($ret->openid){
+                $access = md5($ret->openid.time());
+                cache('user.access_token.'.$access,$ret->openid,3600);
+                $check = Db::name('xuser')->where(['openid'=>$ret->openid])->find();
+                if(!$check){
+                    Db::name('xuser')->insert(['openid'=>$ret->openid]);
+                }
+                return back(1,'登录成功',$access);
+            }else{
+                return back(0,'登录失败');
+            }
+        }
+    }
+    //保存用户信息
+    public function saveUserInfo(){
+        $data = input();
+        if (!$data['access']) {
+            return back(0,'参数错误');
+        }
+        $openid = cache('access'.$data['access']);
+        $ret = Db::name('xuser')->where(['openid'=>$openid])->update([
+            'avatar_url'    =>  $data['avatarUrl'],
+            'gender'        =>  $data['gender'],
+            'nick_name'     =>  emoji_encode($data['nickName']),
+            'last_login'    =>  time()
+        ]);
+        if($ret){
+            return back(1,'保存成功',$ret);
+        }else{
+            return back(0,'保存失败');
+        }
+    }
+    //获取用户信息
+    public function getUserInfo(){
+        $data = input();
+        if (!$data['access']) {
+            return back(0,'参数错误');
+        }
+        $openid = cache('access'.$data['access']);
+        $ret = Db::name('xuser')->where(['openid'=>$openid])->field('id,nick_name,phone,avatar_url,last_login')->find();
+        if($ret){
+            $ret['nick_name'] = emoji_decode($ret['nick_name']);
+            return back(1,'获取成功',$ret);
+        }else{
+            return back(0,'获取失败');
+        }
+    }
+
+xcx
+app.js
+
+//头像昵称授权
+  checkAuth:function(path){
+    let that = this;
+    wx.getSetting({
+      success(res) {
+        if (!res.authSetting['scope.userInfo']) {
+          wx.redirectTo({
+            url: '../login/login?url=' + encodeURIComponent(path)
+          });
+        }
+      }
+    })
+  },
+
+  saveUserInfo: function(access){
+    var that = this;
+    wx.getUserInfo({
+      withCredentials: false,
+      success: function (res) {
+        // console.log('000',res);
+        res.userInfo['access'] = access;
+        wx.request({
+          url: that.globalData.domain + '/api/xuser/saveUserInfo',
+          data:  res.userInfo,
+          success: function (ret) {
+            that.getUserInfo();
+          }
+        })
+      }
+    })
+  },
+  getUserInfo(){
+    let that = this;
+    wx.request({
+      url: that.globalData.domain + '/api/xuser/getUserInfo',
+      data: {'access':wx.getStorageSync('access')},
+      success: function (ret) {
+        wx.setStorageSync('userInfo', ret);
+      }
+    })
+  },
+  //获取授权码
+  getAccess:function(type = 0){
+    let that = this;
+    return new Promise(function(resolve,reject){
+      wx.login({
+        success(res) {
+          if (res.code) {
+            //发起网络请求
+            wx.request({
+              url: that.globalData.domain + '/api/xuser/getAccess',
+              data: {
+                code: res.code
+              },
+              success: function (ret) {
+                //是否获取用户数据
+                if (type == 1) {
+                  that.saveUserInfo(ret.data);
+                }
+                wx.setStorageSync('access', ret.data.data);
+                console.log(wx.getStorageSync('access'))
+                return resolve(res.data);
+              }
+            })
+          } else {
+            console.log('登录失败！' + res.errMsg)
+          }
+        }
+      })
+    })
+  },
+  requestPromise(options) {
+    let that = this;
+    return new Promise(function (resolve, reject) {
+      let access =  wx.getStorageSync('access');
+      console.log('ttt',access,'ffff');
+      wx.request({
+        url: that.globalData.domain + '/api/' + options.url,
+        data: options.params,
+        header: {
+          'access': access,
+          'isauth': 1,
+        },
+        method: 'post',
+        success: function (res) {
+          resolve(res)
+        }
+      })
+    });
+  }
