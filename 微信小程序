@@ -77,3 +77,25 @@ public function getUserInfo(){
     $user = Db::name('user')->where('id',$this->user['id'])->field('id,nickname,gender,avatarurl')->find();
     return api_back(200,'获取成功',$user);
 }
+
+index.php
+    /**
+     * 图片上传
+     */
+
+    public function uploadsImage()
+    {
+        $file = request()->file('file');
+        $maxPx = input('maxPx') ? input('maxPx') : 0; //最大图片像素尺寸
+        $maxPx = $maxPx < 2000 ? $maxPx : 2000;
+        $savename = \think\facade\Filesystem::disk('public')->putFile('img', $file);
+        $savename = str_replace('\\', '/', $savename);
+        $retPath = 'uploads/' . $savename;
+        changeImgSize($retPath, $maxPx);
+        if ($savename) { //如果有返回路径
+            Db::name('source')->insert(['url'=>$retPath]);
+            return api_back(200,'上传成功',$retPath);
+        } else {
+            return api_back(409,'上传失败');
+        }
+    }
