@@ -1,0 +1,50 @@
+<?php
+
+namespace wx;
+
+/**
+ * author: sober
+ * time: 2020/04/21
+ * des: 微信支付
+ */
+class Xcx
+{
+
+    private $appid; //小程序
+    private $secret; //小程序秘钥
+
+    public function __construct()
+    {
+        $this->appid  = config('app.appid');
+        $this->secret  = config('app.secret');
+    }
+
+    /**
+     * 获取小程序服务端access_token
+     */
+    public function getAccessToken(){
+        if(cache('xcx_access_token')){
+            return cache('xcx_access_token');
+        }
+        $url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=".$this->appid."&secret=".$this->secret;
+        $ret = curl_request($url);
+        $access_token = json_decode($ret)->access_token;
+        cache('xcx_access_token',$access_token,['expire'=>3600]);
+        return $access_token;
+    }
+
+    /**
+     * 获取永久二维码
+     */
+    public function getQrCode($scene){
+        $access_token = $this->getAccessToken();
+        $url = 'https://api.weixin.qq.com/wxa/getwxacodeunlimit?access_token='.$access_token;
+        $data = [
+            'scene'         =>  $scene
+        ];
+        $ret = curl_request($url,true,json_encode($data));
+        $path = 'uploads/qrcode/'.time().rand(1111,9999).'.png';
+        file_put_contents($path,$ret);
+        return $path;
+    }
+}
