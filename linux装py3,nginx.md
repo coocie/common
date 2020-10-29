@@ -3,7 +3,7 @@
 netstat yum install net-tools
 
 
-安装python3.6
+安装python3.6(不要装高版本，不稳定)
 解压tgz tar zxvf Python-3.6.12.tgz
 yum install gcc
 yum install libffi-devel -y
